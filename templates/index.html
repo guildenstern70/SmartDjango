@@ -1,0 +1,17 @@
+{% extends "skeleton.html" %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" id="jumbo">
+        <h1 class="display-4" id="project">SmartDjango</h1>
+        <p class="lead">Welcome to SmartDjango, a Django 3 template.</p>
+        <hr class="my-4">
+        <p>It uses Django, Bootstrap and SqlLite.</p>
+        <a class="btn btn-primary btn-lg" href="/login" role="button">Enter</a>
+        <br/><br/>
+        <small><a href="/admin">Administration</a></small>
+    </div>
+{% endblock %}

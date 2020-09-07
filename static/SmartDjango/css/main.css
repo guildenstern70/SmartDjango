@@ -1,0 +1,27 @@
+/*
+ * SmartDjango Python Project
+ *
+ * Copyright (c) 2020 Alessio Saltarin
+ * This software is distributed under MIT License.
+ * See LICENSE.
+ *
+ */
+
+#jumbo {
+    margin-top: 1em;
+}
+
+.starter-template {
+    text-align: center;
+    margin-top: 6em;
+}
+
+.feather {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}

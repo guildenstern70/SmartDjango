@@ -1,0 +1,29 @@
+/*
+ * SmartDjango Python Project
+ *
+ * Copyright (c) 2020 Alessio Saltarin
+ * This software is distributed under MIT License.
+ * See LICENSE.
+ *
+ */
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold-webfont.woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular-webfont.woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light-webfont.woff');
+    font-weight: 300;
+    font-style: normal;
+}

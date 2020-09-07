@@ -1,0 +1,66 @@
+{% extends "skeleton.html" %}
+{% load icon %}
+{% load static %}
+
+{% block title %}
+    <title> SmartDjango | {{ title }} </title>
+{% endblock %}
+
+{% block pagecss %}
+    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/login.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <form class="form-signin" name="login" action="/login/" method="POST">
+            {% csrf_token %}
+            <div class="logintitle">
+                <div class="h4 text-primary">SmartDjango</div>
+            </div>
+            <label class="sr-only" for="username">Username</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" style="height: 50px">
+                        {% icon "user" class="css-class" height="20" width="20" %}
+                    </div>
+                </div>
+                <input style="height: 50px;" type="text" id="username" class="form-control" placeholder="Username"
+                       maxlength="100" required autofocus=""
+                       name="username">
+            </div>
+            <label for="password" class="sr-only">Password</label>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" style="height: 50px">
+                        <svg class="feather">
+                            {% icon "lock" class="css-class" height="20" width="20" %}
+                        </svg>
+                    </div>
+                </div>
+                <input style="height: 50px;" type="password" id="password" class="form-control"
+                       placeholder="Password" required
+                       name="password">
+            </div>
+
+            {% if errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Unknown or unauthorized user
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+            {% endif %}
+
+            <div class="checkbox mb-3 text-left">
+                <label class="remember">
+                    <input type="checkbox" id="rememberme" value="remember-me" checked="checked">
+                    &nbsp;&nbsp;Remember me
+                </label>
+            </div>
+            <button id="loginbutton" class="btn btn-lg btn-primary btn-block" type="submit">
+                {% icon "log-in" class="css-class" height="20" width="20" %}
+                <span class="signintext">Sign in</span>
+            </button>
+        </form>
+    </div>
+{% endblock %}
