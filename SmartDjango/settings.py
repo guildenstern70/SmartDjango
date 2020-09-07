@@ -5,7 +5,6 @@
 #  This software is distributed under MIT License.
 #  See LICENSE.
 #
-git@github.com:guildenstern70/SmartDjango.git
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
