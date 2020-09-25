@@ -54,16 +54,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'SmartDjango.wsgi.application'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'postgres': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ibmclouddb',
-        'USER': 'ibm_cloud_1e9b93ce_1b3a_4e2b_ada6_dc37a67c86bc',
-        'PASSWORD': '09f2f60b2ff00598f325e8c29996222f7a5cdc33d257b468f3277b4ad899e497',
-        'HOST': 'd4f3.blrv234f085n1l00bhrg.databases.appdomain.cloud',
-        'PORT': '30267',
+        'NAME': 'smartdjangodb',
+        'USER': 'postgres-c86bc',
+        'PASSWORD': '09f2f60b2ff00598f325e8c29',
+        'HOST': 'postgresql',
+        'PORT': '5432',
     }
 }
 
