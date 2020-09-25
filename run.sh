@@ -12,7 +12,7 @@ echo "make migrations"
 python manage.py makemigrations
 echo "migrate"
 python manage.py migrate
-echo [$0] Starting Django Server...
-python manage.py runserver
+echo [$0] Starting GUnicorn Server...
+exec gunicorn -w 3 SmartDjango.wsgi:application --bind 0.0.0.0:8000
 
 
