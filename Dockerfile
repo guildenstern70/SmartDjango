@@ -7,7 +7,7 @@ RUN pip install -r requirements.txt
 
 ADD . .
 
-EXPOSE 8000
+EXPOSE 8080
 
 RUN chmod +x /app/run.sh
 RUN /app/run.sh
