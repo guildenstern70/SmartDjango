@@ -8,7 +8,7 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = 'q5oagk40y)-i_+yo%z&8ba47iq!qek&35wu1vef-byk6%3ncns'
+SECRET_KEY = 'fake'
 DEBUG = True
 
 
@@ -57,13 +57,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ibmclouddb',
-        'USER': 'ibm_cloud_1e9b93ce_1b3a_4e2b_ada6_dc37a67c86bc',
-        'PASSWORD': '09f2f60b2ff00598f325e8c29996222f7a5cdc33d257b468f3277b4ad899e497',
-        'HOST': 'd4f3.blrv234f085n1l00bhrg.databases.appdomain.cloud',
-        'PORT': '30267',
+    'sqlite': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

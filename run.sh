@@ -7,7 +7,7 @@
 # See LICENSE.
 #
 #
-
+export DJANGO_SETTINGS_MODULE=SmartDjango.realsettings
 echo "make migrations"
 python manage.py makemigrations
 echo "migrate"
