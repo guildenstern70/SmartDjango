@@ -32,5 +32,15 @@ If not already done, create super-user with
     
 If unsure, try with "admin/admin"
 
+#### Create Docker image
+
+    docker build -t smart-django:1 .
+    
+#### Run image
+
+    docker run -p 8080:8080 smart-django:1
+    
+
+
 
     

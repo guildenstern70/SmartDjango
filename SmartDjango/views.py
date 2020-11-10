@@ -26,7 +26,7 @@ def index(request):
 def another(request):
     template = loader.get_template('anotherpage.html')
     context = {
-        'username': request.session['logged_user'],
+        'username': request.user.username,
         'title': 'Another Page',
     }
     return HttpResponse(template.render(context, request))
@@ -34,9 +34,9 @@ def another(request):
 
 @login_required
 def logout_view(request):
-    logger.info('Logging out user ' + request.user)
+    logger.info('Logging out user ' + str(request.user))
     logout(request)
-    return HttpResponseRedirect('/index/')
+    return HttpResponseRedirect('/')
 
 
 def loginform(request):
