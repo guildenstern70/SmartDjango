@@ -1,14 +1,26 @@
 /*
  * SmartDjango Python Project
  *
- * Copyright (c) 2020 Alessio Saltarin
+ * Copyright (c) 2021 Alessio Saltarin
  * This software is distributed under MIT License.
  * See LICENSE.
  *
  */
 
-#jumbo {
-    margin-top: 1em;
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+.jumbotron {
+    padding: 2rem 1rem;
+    margin: 1rem 0 5rem 0;
+    background-color: #d9d9ea;
+    border-radius: .3rem;
+    display: block;
+}
+
+.jumbotitle {
+    font-weight: bold;
 }
 
 .starter-template {

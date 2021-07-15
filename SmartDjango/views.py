@@ -1,9 +1,13 @@
+#  SmartDjango Python Project
+#
+#  Copyright (c) 2021 Alessio Saltarin
+#  This software is distributed under MIT License.
+#  See LICENSE.
+#
+
 #
 #  SmartDjango Python Project
 #
-#  Copyright (c) 2020 Alessio Saltarin
-#  This software is distributed under MIT License.
-#  See LICENSE.
 #
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -18,6 +22,7 @@ def index(request):
     template = loader.get_template('index.html')
     context = {
         'title': 'SmartDjango',
+        'version': '0.1'
     }
     return HttpResponse(template.render(context, request))
 

@@ -2,12 +2,11 @@
 #
 # SmartDjango Python Project
 #
-# Copyright (c) 2020 Alessio Saltarin
+# Copyright (c) 2021 Alessio Saltarin
 # This software is distributed under MIT License.
 # See LICENSE.
 #
 #
-# export DJANGO_SETTINGS_MODULE=SmartDjango.realsettings
 echo "make migrations"
 python manage.py makemigrations
 echo "migrate"

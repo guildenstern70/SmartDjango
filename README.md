@@ -6,18 +6,13 @@
 Template solution for Django Web App with:
 
 1. Django v.3.x.y
-2. Bootstrap v.4
+2. Bootstrap v.5
 3. SQLite
 
 ### Download required libraries
 
     pip install -r requirements.txt
-
-#### Local Run
-Run locally within Django sandbox:
-
-    ./run.sh
-    
+ 
 ##### App Setup
     
 Create Application database and data definitions:
@@ -31,6 +26,11 @@ If not already done, create super-user with
     python manage.py createsuperuser
     
 If unsure, try with "admin/admin"
+
+#### Local Run
+Run locally within Django sandbox:
+
+    ./run.sh
 
 #### Create Docker image
 
