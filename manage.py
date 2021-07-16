@@ -7,25 +7,6 @@
 #  See LICENSE.
 #
 
-#  SmartDjango Python Project
-#
-#
-
-#
-#  SmartDjango Python Project
-#
-#
-#  SmartDjango Python Project
-#
-#
-
-#
-#
-
-#
-#
-#
-#
 
 import os
 import sys
