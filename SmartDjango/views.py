@@ -40,9 +40,10 @@ def home(request):
 @login_required
 def another(request):
     template = loader.get_template('anotherpage.html')
+    title = request.GET.get('title', 'Another page')
     context = {
         'username': request.user.username,
-        'title': 'Another Page',
+        'title': title,
     }
     return HttpResponse(template.render(context, request))
 

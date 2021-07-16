@@ -1,16 +1,19 @@
 {% extends "base-nav.html" %}
+{% load icon %}
+{% load static %}
 
 {% block title %}
     <title> SmartDjango | {{ title }} </title>
 {% endblock %}
 
-
+{% block pagecss %}
+    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/homepage.css" %}">
+{% endblock %}
 
 {% block main %}
-    <main role="main" class="container">
-        <div class="starter-template">
-            <h1>This is another page</h1>
-            <a href="/home">Back</a>
-        </div>
-    </main>
+    <div class="container">
+        <h1 class="mt-5">{{ title}}</h1>
+        <p class="lead">Displaying different content here.</p>
+        <p>Back to <a href="/home">the homepage</a></p>
+    </div>
 {% endblock %}
