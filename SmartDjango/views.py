@@ -28,6 +28,16 @@ def index(request):
 
 
 @login_required
+def home(request):
+    template = loader.get_template('homepage.html')
+    context = {
+        'title': 'Homepage',
+        'username': request.user.username,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def another(request):
     template = loader.get_template('anotherpage.html')
     context = {
@@ -68,11 +78,3 @@ def loginform(request):
     return HttpResponse(template.render(context, request))
 
 
-@login_required
-def home(request):
-    template = loader.get_template('homepage.html')
-    context = {
-        'title': 'Homepage',
-        'username': request.user.username,
-    }
-    return HttpResponse(template.render(context, request))

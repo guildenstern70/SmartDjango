@@ -1,16 +1,19 @@
 {% extends "base-nav.html" %}
+{% load icon %}
+{% load static %}
 
 {% block title %}
     <title> SmartDjango | {{ title }} </title>
 {% endblock %}
 
-
+{% block pagecss %}
+    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/homepage.css" %}">
+{% endblock %}
 
 {% block main %}
-    <main role="main" class="container">
-      <div class="starter-template">
-        <h1>Welcome to SmartDjango, {{ username }}</h1>
-        <p class="lead">This template is a starter Django project</p>
-      </div>
-    </main>
+    <div class="container">
+        <h1 class="mt-5">SmartDjango Template Home</h1>
+        <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code class="small">padding-top: 60px;</code> on the <code class="small">main &gt; .container</code>.</p>
+        <p>Back to <a href="#">the default sticky footer</a> minus the navbar.</p>
+    </div>
 {% endblock %}
