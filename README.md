@@ -1,6 +1,7 @@
 ## SmartDjango
 
 ![SmartDjango CI](https://github.com/guildenstern70/SmartDjango/workflows/SmartDjango%20CI/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 #### Description
 Template solution for Django Web App with:

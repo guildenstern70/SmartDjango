@@ -2,11 +2,8 @@ FROM python:3.9-slim-buster
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-ADD . .
+COPY . .
 EXPOSE 8080
-CMD echo "make migrations"
-CMD python manage.py makemigrations
-CMD echo "migrate"
-CMD python manage.py migrate
-CMD echo [$0] Starting Django Server...
-CMD exec gunicorn -w 3 SmartDjango.wsgi:application --bind 0.0.0.0:8080
+RUN chmod +x run_unicorn.sh
+ENTRYPOINT ["/bin/bash", "/app/run_unicorn.sh"]
+
