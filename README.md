@@ -19,6 +19,8 @@ Template solution for Django Web App with:
     
 Create Application database and data definitions:
 
+    python manage.py makemigrations
+
     python manage.py migrate
     
 #### Admin App

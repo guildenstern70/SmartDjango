@@ -19,4 +19,24 @@
             - and cloud native.</p>
         <p>Visit <a href="https://www.djangoproject.com/" target="_blank">the Diango official site</a> to discover more.</p>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+            {% for car in cars %}
+                <div class="card" style="width: 18rem;">
+                  <img src="{% static "SmartDjango/{{ car.image_path }}" %}" class="card-img-top p-4" alt="Car">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="card-text">{{ car.description }}</p>
+                    <a href="#" class="btn btn-primary">Cancel</a>
+                  </div>
+                </div>
+            {% empty %}
+                <p>Car database is empty.</p>
+            {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
 {% endblock %}

@@ -15,6 +15,8 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 import logging
 
+from SmartDjango.models import Car
+
 logger = logging.getLogger(__name__)
 
 
@@ -33,6 +35,7 @@ def home(request):
     context = {
         'title': 'Homepage',
         'username': request.user.username,
+        'cars': Car.objects.all(),
     }
     return HttpResponse(template.render(context, request))
 
