@@ -1,4 +1,3 @@
 venv/
 .idea/
-SmartDjango/realsettings.py
-
+db.sqlite3

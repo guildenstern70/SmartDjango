@@ -36,6 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'SmartDjango.urls'
@@ -58,6 +59,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'SmartDjango.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -66,7 +68,15 @@ DATABASES = {
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    # 'postgres': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'elephantsql',
+    #     'USER': '*****',
+    #     'PASSWORD': '******',
+    #     'HOST': '*****.db.elephantsql.com',
+    #     'PORT': '5432',
+    # }
 }
 
 LOGGING = {
@@ -116,10 +126,9 @@ USE_L10N = True
 USE_TZ = False
 
 LOGIN_URL = '/login'
-STATIC_URL = '/static/'
-STATIC_ROOT = ''
-STATICFILES_DIRS = (
-    os.path.join('static'),
-)
+
+STATIC_URL = 'static/'
+STATIC_ROOT = '/app/static/'
+
 
 
