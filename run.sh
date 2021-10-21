@@ -14,7 +14,6 @@ echo "make migrations..."
 python manage.py makemigrations SmartDjango
 echo "migrate..."
 python manage.py migrate SmartDjango
-python manage.py populate_db
 python manage.py collectstatic --noinput
 echo [$0] Starting Django Server...
 exec gunicorn -w 3 SmartDjango.wsgi:application --bind 0.0.0.0:8080

@@ -9,13 +9,16 @@
 #  SmartDjango Python Project
 #
 #
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.contrib.auth import authenticate, login, logout
 import logging
-
+from SmartDjango.forms import CustomUserCreationForm
 from SmartDjango.models import Car
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.template import loader
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +28,63 @@ def index(request):
     context = {
         'title': 'SmartDjango',
         'version': '0.1'
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def loginform(request):
+    logger.info('Login form.')
+    errors = False
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        logger.info('Received login form POST')
+        logger.info('Username = ' + username)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            logger.info('User ' + username + ' was authenticated.')
+            login(request, user)
+            return HttpResponseRedirect('/home/')
+        else:
+            logger.info('User ' + username + ' is unknown or input wrong password.')
+            errors = True
+    template = loader.get_template('account/login.html')
+    context = {
+        'title': 'Login',
+        'header': 'Login',
+        'errors': errors
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def registration(request):
+    template = loader.get_template('account/registration.html')
+    if request.method == 'POST':
+        registration_data = UserCreationForm(request.POST)
+        logger.info('Received registration data...')
+        if registration_data.is_valid():
+            registered_user = registration_data.cleaned_data['username']
+            logger.info('Registration data is valid for user ' +
+                        registered_user)
+            registration_data.save()
+            return HttpResponseRedirect('/registered/' + registered_user)
+        else:
+            messages.error(request, registration_data.errors)
+            logger.info('Registration data is NOT valid')
+    context = {
+        'title': 'Registration',
+        'header': 'Register new user',
+        'form': CustomUserCreationForm(),
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def registration_ok(request):
+    template = loader.get_template('account/registration_ok.html')
+    context = {
+        'title': 'Registration',
+        'header': 'User registered',
+        'username': request.GET.get('username')
     }
     return HttpResponse(template.render(context, request))
 
@@ -57,28 +117,5 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-
-def loginform(request):
-    logger.info('Login form.')
-    errors = False
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        logger.info('Received login form POST')
-        logger.info('Username = ' + username)
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            logger.info('User ' + username + ' was authenticated.')
-            login(request, user)
-            return HttpResponseRedirect('/home/')
-        else:
-            logger.info('User ' + username + ' is unknown or input wrong password.')
-            errors = True
-    template = loader.get_template('login.html')
-    context = {
-        'title': 'Login',
-        'errors': errors
-    }
-    return HttpResponse(template.render(context, request))
 
 

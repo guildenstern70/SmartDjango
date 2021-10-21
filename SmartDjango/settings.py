@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_feather',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'SmartDjango'
 ]
 
@@ -129,6 +131,10 @@ LOGIN_URL = '/login'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = '/app/static/'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 
 

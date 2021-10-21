@@ -22,9 +22,15 @@
                         </small>
                     </div>
                     <div class="mt-4">
-                        <a class="btn btn-primary btn-lg" href="/home" role="button">Enter</a>
-                        &nbsp;
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-primary btn-lg" href="/home" role="button">Enter</a>
+                        {% else %}
+                            <a class="btn btn-primary btn-lg" href="/home" role="button">Login</a>
+                        {%  endif %}&nbsp;
                         <a class="btn btn-success btn-lg" href="/admin" role="button">Administration</a>
+                    </div>
+                    <div class="text-secondary mt-3">
+                        Need to register? Click <a href="/register">here</a>.
                     </div>
                 </div>
             </div>
