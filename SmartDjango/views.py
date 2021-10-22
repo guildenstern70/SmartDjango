@@ -79,12 +79,13 @@ def registration(request):
     return HttpResponse(template.render(context, request))
 
 
-def registration_ok(request):
+def registration_ok(request, username):
+    logger.info('Showing registration info for user ' + username)
     template = loader.get_template('account/registration_ok.html')
     context = {
         'title': 'Registration',
         'header': 'User registered',
-        'username': request.GET.get('username')
+        'username': username
     }
     return HttpResponse(template.render(context, request))
 
