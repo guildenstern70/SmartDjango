@@ -9,7 +9,9 @@
 #  SmartDjango Python Project
 #
 #
+
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fake'
@@ -98,6 +100,7 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
+            'stream': sys.stdout
         },
     },
     'root': {
