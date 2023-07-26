@@ -67,6 +67,12 @@ View logs
 
     kubectl logs smart-django-5fff9d946c-qlclr 
 
+Cleanup
+
+    kubectl delete services smart-django
+    kubectl delete pods smart-django
+    
+
     
 
 
