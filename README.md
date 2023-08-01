@@ -42,6 +42,37 @@ Run locally within Django sandbox:
 #### Run image
 
     docker run -p 8080:8080 smart-django:1
+
+### Setup SmartDjango in Kubernetes
+
+You may use any Kubernetes cluster, or install 'minikube' locally:
+
+    https://minikube.sigs.k8s.io/docs/start/
+
+then
+
+    minikube start
+
+When you have minikube running:
+
+    kubectl create deployment smart-django --image=guildenstern70/smart-django:3
+    kubectl expose deployment smart-django --type=NodePort --port=8080
+    kubectl port-forward service/smart-django 7080:8080
+
+Your application should be available at
+
+    http://localhost:7080
+
+View logs
+
+    kubectl logs smart-django-5fff9d946c-qlclr 
+
+Cleanup
+
+    kubectl delete services smart-django
+    kubectl delete pods smart-django
+    
+
     
 
 
