@@ -7,6 +7,11 @@
 # See LICENSE.
 #
 #
+if [ -z "${DJANGO_SUPERUSER_USERNAME}" ]; then
+    export DJANGO_SUPERUSER_USERNAME='admin'
+    export DJANGO_SUPERUSER_PASSWORD='admin'
+    export DJANGO_SUPERUSER_EMAIL="admin@smartdjango.net"
+fi
 echo "building db..."
 python manage.py migrate
 python manage.py createsuperuser --noinput

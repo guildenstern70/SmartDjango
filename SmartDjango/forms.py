@@ -12,6 +12,32 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
+from SmartDjango.models import Car
+
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = ('brand','name','max_speed')
+
+        widgets = {
+            'max_speed': forms.NumberInput(attrs={'min': 0, 'max': 500}),
+        }
+        labels = {
+            'max_speed':'Max Speed'
+        }
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'carform-id'
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Save'))
+        self.helper.add_input(Button('cancel', 'Cancel',
+                                     css_class='btn-secondary',
+                                     onclick="closeModal()" ))
+
 
 class CustomUserCreationForm(forms.Form):
 

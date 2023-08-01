@@ -64,18 +64,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    # 'postgres': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'elephantsql',
-    #     'USER': '*****',
-    #     'PASSWORD': '******',
-    #     'HOST': '*****.db.elephantsql.com',
-    #     'PORT': '5432',
-    # }
+    'postgres': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kubernetes_django',
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
+    }
 }
 
 LOGGING = {
@@ -128,7 +124,7 @@ USE_TZ = False
 LOGIN_URL = '/login'
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/app/static/'
+STATIC_ROOT = 'app/static/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
