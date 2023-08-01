@@ -13,78 +13,102 @@
 
 {% block main %}
     <div class="container">
-    <h1 class="mt-2">{{ title }}</h1>
-    <div class="row">
-        <div class="col-7">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">&nbsp;</th>
-                    <th scope="col">#</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Max Speed</th>
-                    <th scope="col">&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for car in cars %}
+        <h1 class="mt-2">{{ title }}</h1>
+        <div class="row">
+            <div class="col-7">
+                <table class="table">
+                    <thead>
                     <tr>
-                        {% with 'SmartDjango/img/'|add:car.image_path as imagepath %}
-                            <td><img src="{% static imagepath %}" width="50px" alt="Car Image"></td>
-                        {% endwith %}
-                        <th scope="row">{{ car.id }}</th>
-                        <td>{{ car.brand }}</td>
-                        <td>{{ car.name }}</td>
-                        <td>{{ car.max_speed }}</td>
-                        <td><i class="bi bi-trash"></i></td>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Max Speed</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="5">Car database is empty.</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for car in cars %}
+                        <tr>
+                            {% with 'SmartDjango/img/'|add:car.image_path as imagepath %}
+                                <td><img src="{% static imagepath %}" width="50px" alt="Car Image"></td>
+                            {% endwith %}
+                            <th scope="row">{{ car.id }}</th>
+                            <td>{{ car.brand }}</td>
+                            <td>{{ car.name }}</td>
+                            <td>{{ car.max_speed }}</td>
+                            <td>
+                                <button type="button" class="btn btn-light btn-sm"
+                                        onclick="showDeleteModal({{ car.id }})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">Car database is empty.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm">
-            <button class="btn btn-primary mt-4 mb-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#insertCarModal" role="button">Add new
-            </button>
+        <div class="row">
+            <div class="col-sm">
+                <button class="btn btn-primary mt-4 mb-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#insertCarModal" role="button">Add new
+                </button>
+            </div>
         </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="insertCarModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {% if messages %}
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>New car insert</strong>
-                        <ul class="messages">
-                            {% for message in messages %}
-                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <!-- Inser New Car Modal -->
+        <div class="modal fade" id="insertCarModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    {% if messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>New car insert</strong>
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Insert new car</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                {% endif %}
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Insert new car</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {% crispy form %}
+                    <div class="modal-body">
+                        {% crispy form %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- Delete Car -->
+        <div class="modal fade" id="deleteCarModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Car</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want to delete car #<span id="deleteCarId">??</span>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">No</button>
+                        <a id="deleteLink" class="btn btn-danger">Yes</a>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Container -->
 
 {% endblock %}
 
 {% block extrajavascript %}
     <script src="{% static 'SmartDjango/js/cars.js' %}"></script>
 {% endblock %}
-

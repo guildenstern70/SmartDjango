@@ -115,6 +115,11 @@ def cars(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
+def delete_car(request, car_id):
+    logger.info('Deleting car ' + str(car_id))
+    Car.objects.filter(id=car_id).delete()
+    return HttpResponseRedirect('/cars')
 
 @login_required
 def another(request):
