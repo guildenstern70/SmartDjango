@@ -13,54 +13,73 @@
 
 {% block main %}
     <div class="container">
-        <h1 class="mt-2">{{ title}}</h1>
-      <div class="row">
-        <div class="col-sm">
-            {% for car in cars %}
-                <div class="card" style="width: 18rem;">
-                  <img src="{% static "SmartDjango/{{ car.image_path }}" %}" class="card-img-top p-4" alt="Car">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ car.name }}</h5>
-                    <p class="card-text">{{ car.description }}</p>
-                    <a href="#" class="btn btn-primary">Cancel</a>
-                  </div>
-                </div>
-            {% empty %}
-                <p>Car database is empty.</p>
-            {% endfor %}
+    <h1 class="mt-2">{{ title }}</h1>
+    <div class="row">
+        <div class="col-7">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Max Speed</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for car in cars %}
+                    <tr>
+                        {% with 'SmartDjango/img/'|add:car.image_path as imagepath %}
+                            <td><img src="{% static imagepath %}" width="50px" alt="Car Image"></td>
+                        {% endwith %}
+                        <th scope="row">{{ car.id }}</th>
+                        <td>{{ car.brand }}</td>
+                        <td>{{ car.name }}</td>
+                        <td>{{ car.max_speed }}</td>
+                        <td><i class="bi bi-trash"></i></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">Car database is empty.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-      </div>
+    </div>
     <div class="row">
         <div class="col-sm">
-            <button class="btn btn-primary mt-2 mb-2"
+            <button class="btn btn-primary mt-4 mb-2"
                     data-bs-toggle="modal"
-                    data-bs-target="#insertCarModal" role="button">Add new car</button>
+                    data-bs-target="#insertCarModal" role="button">Add new
+            </button>
         </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="insertCarModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-            {% if messages %}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {% if messages %}
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <strong>New car insert</strong>
-                      <ul class="messages">
-                        {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                      </ul>
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <strong>New car insert</strong>
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-            {% endif %}
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Insert new car</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            {% crispy form %}
-          </div>
+                {% endif %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Insert new car</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% crispy form %}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
 {% endblock %}
