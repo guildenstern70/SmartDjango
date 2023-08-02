@@ -7,6 +7,6 @@
 # See LICENSE.
 #
 #
-export DJANGO_SETTINGS_MODULE=SmartDjango.realsettings
+export DJANGO_SETTINGS_MODULE=SmartDjango.settings
 echo "tests"
 python manage.py test

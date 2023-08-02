@@ -14,9 +14,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.conf import settings as django_settings
 
 logger = logging.getLogger(__name__)
 
+def get_db_name():
+    db_name = django_settings.DATABASES['default']['NAME']
+    if db_name.endswith('sqlite3'):
+        db_name = 'sqlite3'
+    return db_name
 
 def index(request):
     template = loader.get_template('index.html')
@@ -70,6 +76,7 @@ def registration(request):
         'title': 'Registration',
         'header': 'Register new user',
         'form': CustomUserCreationForm(),
+        'db_name': get_db_name()
     }
     return HttpResponse(template.render(context, request))
 
@@ -80,7 +87,8 @@ def registration_ok(request, username):
     context = {
         'title': 'Registration',
         'header': 'User registered',
-        'username': username
+        'username': username,
+        'db_name': get_db_name()
     }
     return HttpResponse(template.render(context, request))
 
@@ -91,6 +99,7 @@ def home(request):
     context = {
         'title': 'Homepage',
         'username': request.user.username,
+        'db_name': get_db_name()
     }
     return HttpResponse(template.render(context, request))
 
@@ -112,6 +121,7 @@ def cars(request):
         'username': request.user.username,
         'cars': Car.objects.all(),
         'form': CarForm(),
+        'db_name': get_db_name()
     }
     return HttpResponse(template.render(context, request))
 
@@ -128,6 +138,7 @@ def another(request):
     context = {
         'username': request.user.username,
         'title': title,
+        'db_name': get_db_name()
     }
     return HttpResponse(template.render(context, request))
 

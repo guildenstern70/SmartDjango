@@ -40,7 +40,7 @@ Run locally within Django sandbox:
     docker build -t smart-django:1 .
     docker run -p 8080:8080 smart-django:1
 
-### Run in Kubernetes (minkube)
+### Run in Kubernetes (minikube)
 
 You may use any Kubernetes cluster, or install 'minikube' locally:
 
@@ -50,6 +50,38 @@ then
 
     minikube start
 
+Setup PostgreSQL pod:
+
+    kubectl apply -f k8s/postgres/volume.yaml
+    kubectl apply -f k8s/postgres/volume_claim.yaml
+    kubectl apply -f k8s/postgres/secrets.yaml
+    kubectl apply -f k8s/postgres/deployment.yaml
+    kubectl apply -f k8s/postgres/service.yaml
+
+Setup Django pod:
+
+    docker build -t smartdjango:k8s .
+
+Now you should push this image on some Container Registry. For your convenience, this image has been
+already pushed to Docker Hub, so you may skip this step.
+
+    docker tag smartdjango:k8s <your-registry>/smartdjango:k8s
+    docker push <your-registry>/smartdjango:k8s
+
+Now you can deploy the Django pod:
+
+    kubectl apply -f k8s/django/deployment.yaml
+    kubectl apply -f k8s/django/service.yaml
+
+### Reset Kubernetes resources
+
+    kubectl delete -f k8s/django/service.yaml
+    kubectl delete -f k8s/django/deployment.yaml
+    kubectl delete -f k8s/postgres/service.yaml
+    kubectl delete -f k8s/postgres/deployment.yaml
+    kubectl delete -f k8s/postgres/secrets.yaml
+    kubectl delete -f k8s/postgres/volume_claim.yaml
+    kubectl delete -f k8s/postgres/volume.yaml
 
     
 

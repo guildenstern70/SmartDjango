@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: django
@@ -16,24 +16,23 @@ spec:
     spec:
       containers:
         - name: django
-          image: gitumarkk/k8_django_minikube:part_4
+          image: guildenstern70/smartdjango:5
+          command: ['/bin/bash', 'run.sh']
           ports:
             - containerPort: 8000
           env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: SmartDjango.pg_settings
+
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
                   key: user
-
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
                   key: password
-
             - name: POSTGRES_HOST
               value: postgres-service
-
-            - name: REDIS_HOST
-              value: redis-service
