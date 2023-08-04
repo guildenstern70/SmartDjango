@@ -60,18 +60,22 @@ Setup PostgreSQL pod:
 
 Setup Django pod:
 
-    docker build -t smartdjango:k8s .
+    docker build -t smart-django:1 .
 
 Now you should push this image on some Container Registry. For your convenience, this image has been
 already pushed to Docker Hub, so you may skip this step.
 
-    docker tag smartdjango:k8s <your-registry>/smartdjango:k8s
+    docker tag smart-django:1 <your-registry>/smart-django:k8s
     docker push <your-registry>/smartdjango:k8s
 
 Now you can deploy the Django pod:
 
     kubectl apply -f k8s/django/deployment.yaml
     kubectl apply -f k8s/django/service.yaml
+
+See django logs with:
+
+    kubectl logs -f django-<pod-id>
 
 ### Reset Kubernetes resources
 
@@ -83,6 +87,21 @@ Now you can deploy the Django pod:
     kubectl delete -f k8s/postgres/volume_claim.yaml
     kubectl delete -f k8s/postgres/volume.yaml
 
+It is recommended, if you are using minikube, to remove all resources:
+
+    minikube delete
+
+### Access the App
+
+    minikube service django-service
+
+### Connect to PostgreSQL pod
+
+    kubectl exec -it postgres-<pod-id> -- psql -U django -d postgres
+
+### Connect to Django pod
+
+    kubectl exec -it django-<pod-id> -- /bin/bash
     
 
     
