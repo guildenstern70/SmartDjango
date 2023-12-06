@@ -3,6 +3,7 @@
 from django.db import migrations, models
 from django.contrib.auth.hashers import make_password
 
+
 def create_users(apps, schema_editor):
     user_model = apps.get_registered_model('auth', 'User')
     user1 = user_model(
@@ -22,8 +23,26 @@ def create_users(apps, schema_editor):
     user1.save()
     user2.save()
 
-class Migration(migrations.Migration):
 
+def create_cars(apps, schema_editor):
+    car_model = apps.get_registered_model('SmartDjango', 'Car')
+    car1 = car_model(
+        brand='BMW',
+        name='520i',
+        image_path='269416.png',
+        max_speed=230,
+    )
+    car2 = car_model(
+        brand='Audi',
+        name='A4',
+        image_path='269418.png',
+        max_speed=210,
+    )
+    car1.save()
+    car2.save()
+
+
+class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
@@ -42,4 +61,5 @@ class Migration(migrations.Migration):
                 ('max_speed', models.IntegerField(default=180)),
             ],
         ),
+        migrations.RunPython(create_cars),
     ]
