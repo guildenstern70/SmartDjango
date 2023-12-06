@@ -37,7 +37,7 @@ Run locally within Django sandbox:
 
 ## Run with Docker
 
-    docker build -t smart-django:1 .
+    docker build --platform linux/amd64 -t smart-django:x .
     docker run -p 8080:8080 smart-django:1
 
 ### Run in Kubernetes (minikube)
