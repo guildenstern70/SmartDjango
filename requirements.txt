@@ -1,4 +1,4 @@
-Django==4.2.3
+Django==4.2.16
 asgiref==3.7.2
 crispy-bootstrap5==0.7
 dj-static==0.0.6
