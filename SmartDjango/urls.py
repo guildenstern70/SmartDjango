@@ -19,6 +19,7 @@ urlpatterns = [
     path('cars/delete/<int:car_id>', views.delete_car, name='delete_car'),
     path('login/', views.loginform, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile, name='profile'),
     path('register/', views.registration, name='register'),
     path('registered/<str:username>', views.registration_ok, name='registered'),
     path('admin/', admin.site.urls),

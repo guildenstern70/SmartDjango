@@ -40,4 +40,21 @@ Run locally within Django sandbox:
     docker build --platform linux/amd64 -t smart-django:x .
     docker run -p 8080:8080 smart-django:1
 
+### Virtual Environment
+
+Activate with
+
+    source ./.venv/bin/activate
+
+Deactivate with
+
+    deactivate
+
+### Crispy Forms
+
+This project uses Crispy Forms for Bootstrap:
+
+    https://django-crispy-forms.readthedocs.io/en/latest/
+
+
     

@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
-from SmartDjango.models import Car
+from SmartDjango.models import Car, Brand
 
 IMAGES = (
     ('', 'Choose color...'),
@@ -30,6 +30,7 @@ class CarForm(forms.ModelForm):
             'max_speed': forms.NumberInput(attrs={'min': 0, 'max': 500}),
         }
         labels = {
+            'brand': 'Brand',
             'max_speed': 'Max Speed',
             'image_path': 'Color',
         }
@@ -38,6 +39,8 @@ class CarForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Order brands alphabetically in the dropdown
+        self.fields['brand'].queryset = Brand.objects.order_by('name')
         self.helper = FormHelper()
         self.helper.form_id = 'carform-id'
         self.helper.form_method = 'post'

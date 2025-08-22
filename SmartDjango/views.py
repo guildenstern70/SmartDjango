@@ -150,4 +150,18 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 
+@login_required
+def profile(request):
+    template = loader.get_template('account/profile.html')
+    user = request.user
+    context = {
+        'title': 'Profile',
+        'header': 'Your Profile',
+        'username': user.username,
+        'user_obj': user,
+        'db_name': get_db_name()
+    }
+    return HttpResponse(template.render(context, request))
+
+
 
