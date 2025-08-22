@@ -7,7 +7,7 @@
 ## Description
 Template solution for Django Web App with:
 
-1. Django v.4.0.x
+1. Django v.5.x
 2. Bootstrap v.5
 3. SQLite
 
