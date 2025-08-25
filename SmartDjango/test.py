@@ -6,6 +6,7 @@
 #
 
 from django.test import TestCase
+
 from SmartDjango.urls import urlpatterns
 
 

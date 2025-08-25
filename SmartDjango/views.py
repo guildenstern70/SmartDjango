@@ -6,15 +6,17 @@
 #
 
 import logging
-from SmartDjango.forms import CustomUserCreationForm, CarForm
-from SmartDjango.models import Car
+
+from django.conf import settings as django_settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.conf import settings as django_settings
+
+from SmartDjango.forms import CustomUserCreationForm, CarForm
+from SmartDjango.models import Car
 
 logger = logging.getLogger(__name__)
 
