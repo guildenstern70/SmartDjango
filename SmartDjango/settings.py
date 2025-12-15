@@ -60,11 +60,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'SmartDjango.wsgi.application'
 
 DATABASES = {
-    'default': {
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
+    'supabase': {
+        'ENGINE': "django.db.backends.postgresql",
+        'DATABASE': 'postgres',
+        'NAME': 'postgres',
+        'USER': 'postgres.ogbikezbhsquqbmdamky',
+        'PASSWORD': 'qLK????????',
+        'HOST': 'aws-1-eu-west-1.pooler.supabase.com',
+        'PORT': '6543'
+    },
 }
+
+default_database = os.environ.get('DJANGO_DATABASE', 'local')
+DATABASES['default'] = DATABASES[default_database]
 
 LOGGING = {
     'version': 1,

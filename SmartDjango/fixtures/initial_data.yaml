@@ -1,0 +1,34 @@
+- model: SmartDjango.Brand
+  pk: "BMW"
+  fields:
+    name: "BMW"
+- model: SmartDjango.Brand
+  pk: "Audi"
+  fields:
+    name: "Audi"
+- model: SmartDjango.Brand
+  pk: "Renault"
+  fields:
+    name: "Renault"
+- model: SmartDjango.Car
+  pk: 1
+  fields:
+    name: "X5"
+    brand: "BMW"
+    image_path: '269416.png'
+    max_speed: 240
+- model: SmartDjango.Car
+  pk: 2
+  fields:
+    name: "A6"
+    brand: "Audi"
+    image_path: '269429.png'
+    max_speed: 220
+- model: SmartDjango.Car
+  pk: 3
+  fields:
+    name: "Clio"
+    brand: "Renault"
+    image_path: '269418.png'
+    max_speed: 190
+

@@ -7,7 +7,6 @@
 
 from django.db import models
 
-
 class Brand(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
 

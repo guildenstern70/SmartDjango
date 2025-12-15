@@ -16,11 +16,27 @@ Template solution for Django Web App with:
     pip install -r requirements.txt
  
 ## App Setup
-    
+
+There are several commands which you will use to interact with migrations and Django’s handling of database schema:
+
+ - migrate, which is responsible for applying and unapplying migrations. 
+ - makemigrations, which is responsible for creating new migrations based on the changes you have made to your models. 
+ - sqlmigrate, which displays the SQL statements for a migration. 
+ - showmigrations, which lists a project’s migrations and their status.
+
 Create Application database and data definitions:
 
+    python manage.py makemigrations  (Create new migrations based on the changes you have made to your models)
+    python manage.py migrate (Apply and unapply migrations)
+
+if you want to use PostgreSQL you must use the database name 'supabase':
+
     python manage.py makemigrations
-    python manage.py migrate
+    python manage.py migrate --database=supabase
+
+When database has been created, you can load initial data with:
+
+    python manage.py loaddata initial_data.yaml
     
 ## Admin App
 
@@ -34,6 +50,16 @@ If unsure, try with "admin/admin"
 Run locally within Django sandbox:
 
     ./run.sh
+
+## Local run with PostgreSQL
+
+1. Adjust settings.py to include the correct Supabase password.
+2. Create an administrator account with 'createsuperuser' command.
+3. Run the local development server with:
+
+    DJANGO_DATABASE='supabase' python manage.py runserver
+
+
 
 ## Run with Docker
 
