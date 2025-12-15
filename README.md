@@ -28,11 +28,14 @@ Create Application database and data definitions:
 
     python manage.py makemigrations  (Create new migrations based on the changes you have made to your models)
     python manage.py migrate (Apply and unapply migrations)
+    python manage.py loaddata initial_data.yaml (Load initial data)
+    
 
 if you want to use PostgreSQL you must use the database name 'supabase':
 
     python manage.py makemigrations
     python manage.py migrate --database=supabase
+    python manage.py loaddata initial_data.yaml --database=supabase
 
 When database has been created, you can load initial data with:
 
