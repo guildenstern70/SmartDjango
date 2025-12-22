@@ -11,6 +11,25 @@ Template solution for Django Web App with:
 2. Bootstrap v.5
 3. SQLite
 
+## Local Run
+Run locally within Django sandbox:
+
+    ./run.sh
+
+## Local run with PostgreSQL
+
+1. Adjust settings.py to include the correct Supabase password.
+2. Create an administrator account with 'createsuperuser' command
+```
+   DJANGO_DATABASE='supabase' python manage.py createsuperuser
+```
+
+3. Run the local development server with:
+
+```
+   DJANGO_DATABASE='supabase' python manage.py runserver
+```
+
 ## Download required libraries
 
     pip install -r requirements.txt
@@ -26,10 +45,9 @@ There are several commands which you will use to interact with migrations and Dj
 
 Create Application database and data definitions:
 
-    python manage.py makemigrations  (Create new migrations based on the changes you have made to your models)
-    python manage.py migrate (Apply and unapply migrations)
+    python manage.py makemigrations [appname]  (Create new migrations based on the changes you have made to your models)
+    python manage.py migrate [appname] (Apply and unapply migrations)
     python manage.py loaddata initial_data.yaml (Load initial data)
-    
 
 if you want to use PostgreSQL you must use the database name 'supabase':
 
@@ -40,6 +58,16 @@ if you want to use PostgreSQL you must use the database name 'supabase':
 When database has been created, you can load initial data with:
 
     python manage.py loaddata initial_data.yaml
+
+## Reset database
+
+To reset the database, run:
+
+    python manage.py flush
+
+or for PostgreSQL:
+
+    python manage.py flush --database=supabase
     
 ## Admin App
 
@@ -48,21 +76,6 @@ If not already done, create super-user with
     python manage.py createsuperuser
     
 If unsure, try with "admin/admin"
-
-## Local Run
-Run locally within Django sandbox:
-
-    ./run.sh
-
-## Local run with PostgreSQL
-
-1. Adjust settings.py to include the correct Supabase password.
-2. Create an administrator account with 'createsuperuser' command.
-3. Run the local development server with:
-
-    DJANGO_DATABASE='supabase' python manage.py runserver
-
-
 
 ## Run with Docker
 
@@ -84,6 +97,16 @@ Deactivate with
 This project uses Crispy Forms for Bootstrap:
 
     https://django-crispy-forms.readthedocs.io/en/latest/
+
+### Drop all PostgreSQL tables
+
+   do $$ declare
+       r record;
+   begin
+       for r in (select tablename from pg_tables where schemaname = 'public') loop
+           execute 'drop table if exists ' || quote_ident(r.tablename) || ' cascade';
+       end loop;
+   end $$;
 
 
     

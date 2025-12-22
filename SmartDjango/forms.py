@@ -15,24 +15,23 @@ from django.urls import reverse
 from SmartDjango.models import Car, Brand
 
 IMAGES = (
-    ('', 'Choose color...'),
-    ('269416.png', 'Blue'),
-    ('269418.png', 'Red'),
-    ('269429.png', 'Green')
+    ('', 'Choose brand...'),
+    ('audi.png', 'Audi'),
+    ('bmw.png', 'BMW'),
+    ('honda.png', 'Honda'),
+    ('renaul.png', 'Renault')
 )
 
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ('brand','name', 'image_path','max_speed')
-
-        widgets = {
-            'max_speed': forms.NumberInput(attrs={'min': 0, 'max': 500}),
-        }
+        fields = ('brand','name','color','year', 'kilometers')
         labels = {
+            'name': 'Model Name',
+            'kilometers': 'Mileage (km)',
+            'year': 'Manufacture Year',
             'brand': 'Brand',
-            'max_speed': 'Max Speed',
-            'image_path': 'Color',
+            'color': 'Color'
         }
 
     image_path = forms.ChoiceField(choices=IMAGES)

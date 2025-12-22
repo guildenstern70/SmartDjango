@@ -20,23 +20,25 @@
                     <thead>
                     <tr>
                         <th scope="col">&nbsp;</th>
-                        <th scope="col">#</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Max Speed</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Mileage</th>
+                        <th scope="col">Year</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for car in cars %}
                         <tr>
-                            {% with 'SmartDjango/img/'|add:car.image_path as imagepath %}
-                                <td><img src="{% static imagepath %}" width="50px" alt="Car Image"></td>
+                            {% with 'SmartDjango/img/'|add:car.brand.logo as imagepath %}
+                                <td><img src="{% static imagepath %}" width="50px" alt="Logo"></td>
                             {% endwith %}
-                            <th scope="row">{{ car.id }}</th>
                             <td>{{ car.brand }}</td>
                             <td>{{ car.name }}</td>
-                            <td>{{ car.max_speed }}</td>
+                            <td>{{ car.color }}</td>
+                            <td>{{ car.kilometers }}</td>
+                            <td>{{ car.year }}</td>
                             <td>
                                 <button type="button" class="btn btn-light btn-sm"
                                         onclick="showDeleteModal({{ car.id }})">

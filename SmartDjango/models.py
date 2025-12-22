@@ -9,6 +9,8 @@ from django.db import models
 
 class Brand(models.Model):
     name = models.CharField(max_length=50, primary_key=True, unique=True)
+    headquarters = models.CharField(max_length=100)
+    logo = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['name']
@@ -21,9 +23,13 @@ class Car(models.Model):
     id = models.AutoField(primary_key=True)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='cars')
     name = models.CharField(max_length=30)
-    image_path = models.CharField(max_length=30)
-    max_speed = models.IntegerField(default=180)
+    color = models.CharField(max_length=30)
+    year = models.IntegerField()
+    kilometers = models.IntegerField()
+
+    class Meta:
+        ordering = ['brand', 'name']
 
     def __str__(self):
-        return f"{self.brand} {self.name}"
+        return f"{self.brand} {self.name} ({self.year})"
 

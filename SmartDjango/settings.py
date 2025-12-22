@@ -69,7 +69,7 @@ DATABASES = {
         'DATABASE': 'postgres',
         'NAME': 'postgres',
         'USER': 'postgres.ogbikezbhsquqbmdamky',
-        'PASSWORD': 'qLK????????',
+        'PASSWORD': 'qLKmatt07',
         'HOST': 'aws-1-eu-west-1.pooler.supabase.com',
         'PORT': '6543'
     },

@@ -2,33 +2,127 @@
   pk: "BMW"
   fields:
     name: "BMW"
+    headquarters: "Munich, Germany"
+    logo: "bmw.png"
 - model: SmartDjango.Brand
   pk: "Audi"
   fields:
     name: "Audi"
+    headquarters: "Ingolstadt, Germany"
+    logo: "audi.png"
 - model: SmartDjango.Brand
   pk: "Renault"
   fields:
     name: "Renault"
+    headquarters: "Boulogne-Billancourt, France"
+    logo: "renault.png"
+- model: SmartDjango.Brand
+  pk: "Honda"
+  fields:
+    name: "Honda"
+    headquarters: "Tokyo, Japan"
+    logo: "honda.png"
 - model: SmartDjango.Car
   pk: 1
   fields:
     name: "X5"
     brand: "BMW"
-    image_path: '269416.png'
-    max_speed: 240
+    color: "Black"
+    year: 2020
+    kilometers: 15000
 - model: SmartDjango.Car
   pk: 2
   fields:
     name: "A6"
     brand: "Audi"
-    image_path: '269429.png'
-    max_speed: 220
+    color: "White"
+    year: 2019
+    kilometers: 20000
 - model: SmartDjango.Car
   pk: 3
   fields:
     name: "Clio"
     brand: "Renault"
-    image_path: '269418.png'
-    max_speed: 190
-
+    color: "Red"
+    year: 2021
+    kilometers: 10000
+- model: SmartDjango.Car
+  pk: 4
+  fields:
+    name: "330i"
+    brand: "BMW"
+    color: "Blue"
+    year: 2018
+    kilometers: 35000
+- model: SmartDjango.Car
+  pk: 5
+  fields:
+    name: "Q5"
+    brand: "Audi"
+    color: "Grey"
+    year: 2021
+    kilometers: 12000
+- model: SmartDjango.Car
+  pk: 6
+  fields:
+    name: "Megane"
+    brand: "Renault"
+    color: "Silver"
+    year: 2017
+    kilometers: 48000
+- model: SmartDjango.Car
+  pk: 7
+  fields:
+    name: "Civic"
+    brand: "Honda"
+    color: "Blue"
+    year: 2022
+    kilometers: 8000
+- model: SmartDjango.Car
+  pk: 8
+  fields:
+    name: "i3"
+    brand: "BMW"
+    color: "White"
+    year: 2019
+    kilometers: 25000
+- model: SmartDjango.Car
+  pk: 9
+  fields:
+    name: "A3"
+    brand: "Audi"
+    color: "Black"
+    year: 2016
+    kilometers: 60000
+- model: SmartDjango.Car
+  pk: 10
+  fields:
+    name: "Twingo"
+    brand: "Renault"
+    color: "Yellow"
+    year: 2020
+    kilometers: 15000
+- model: SmartDjango.Car
+  pk: 11
+  fields:
+    name: "CR-V"
+    brand: "Honda"
+    color: "Grey"
+    year: 2015
+    kilometers: 85000
+- model: SmartDjango.Car
+  pk: 12
+  fields:
+    name: "M3"
+    brand: "BMW"
+    color: "Red"
+    year: 2022
+    kilometers: 5000
+- model: SmartDjango.Car
+  pk: 13
+  fields:
+    name: "e-tron"
+    brand: "Audi"
+    color: "White"
+    year: 2023
+    kilometers: 3000
