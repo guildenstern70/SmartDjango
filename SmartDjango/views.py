@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 def get_db_name():
     db_name = django_settings.DATABASES['default']['NAME']
-    if db_name.endswith('sqlite3'):
+    if str(db_name).endswith('sqlite3'):
         db_name = 'sqlite3'
     return db_name
 
