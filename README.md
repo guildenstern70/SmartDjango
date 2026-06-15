@@ -11,8 +11,60 @@ Template solution for Django Web App with:
 2. Bootstrap v.5
 3. SQLite
 
+## Setup
+
+To build the project locally, you need to have Python 3.10+ installed. You may use a virtual environment to manage dependencies.
+
+### Virtual Environment
+
+Create one with:
+
+    python -m venv .venv
+
+Activate it with:
+
+    source ./.venv/bin/activate
+
+Then install the project dependencies:
+
+    pip install -r requirements.txt
+
+Deactivate it with:
+
+    deactivate
+
+## App Setup
+
+Before using the app, you need to set up the database. By default, it uses SQLite, but you can also configure it to 
+use PostgreSQL with Supabase.
+
+There are several commands which you will use to interact with migrations and 
+Django’s handling of database schema:
+
+ - migrate, which is responsible for applying and unapplying migrations. 
+ - makemigrations, which is responsible for creating new migrations based on the changes you have made to your models. 
+ - sqlmigrate, which displays the SQL statements for a migration. 
+ - showmigrations, which lists a project’s migrations and their status.
+
+Create Application database and data definitions:
+
+    python manage.py makemigrations [appname]  (Create new migrations based on the changes you have made to your models)
+    python manage.py migrate [appname] (Apply and unapply migrations)
+    python manage.py loaddata initial_data.yaml (Load initial data)
+
+if you want to use PostgreSQL you must use the database name 'supabase' adding:
+    
+    --database=supabase
+
+to the below commands. If you want to use SQLite, just run the above commands without the `--database` flag.
+
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py loaddata initial_data.yaml
+
+
 ## Local Run
-Run locally within Django sandbox:
+Run locally within virtual environment with:
 
     ./run.sh
 
@@ -33,31 +85,6 @@ Run locally within Django sandbox:
 ## Download required libraries
 
     pip install -r requirements.txt
- 
-## App Setup
-
-There are several commands which you will use to interact with migrations and Django’s handling of database schema:
-
- - migrate, which is responsible for applying and unapplying migrations. 
- - makemigrations, which is responsible for creating new migrations based on the changes you have made to your models. 
- - sqlmigrate, which displays the SQL statements for a migration. 
- - showmigrations, which lists a project’s migrations and their status.
-
-Create Application database and data definitions:
-
-    python manage.py makemigrations [appname]  (Create new migrations based on the changes you have made to your models)
-    python manage.py migrate [appname] (Apply and unapply migrations)
-    python manage.py loaddata initial_data.yaml (Load initial data)
-
-if you want to use PostgreSQL you must use the database name 'supabase':
-
-    python manage.py makemigrations
-    python manage.py migrate --database=supabase
-    python manage.py loaddata initial_data.yaml --database=supabase
-
-When database has been created, you can load initial data with:
-
-    python manage.py loaddata initial_data.yaml
 
 ## Reset database
 
@@ -81,16 +108,6 @@ If unsure, try with "admin/admin"
 
     docker build --platform linux/amd64 -t smart-django:x .
     docker run -p 8080:8080 smart-django:1
-
-### Virtual Environment
-
-Activate with
-
-    source ./.venv/bin/activate
-
-Deactivate with
-
-    deactivate
 
 ### Crispy Forms
 

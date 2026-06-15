@@ -1,6 +1,6 @@
 #  SmartDjango Python Project
 #
-#  Copyright (c) 2021-25 Alessio Saltarin
+#  Copyright (c) 2021-26 Alessio Saltarin
 #  This software is distributed under MIT License.
 #  See LICENSE.
 #
@@ -69,7 +69,7 @@ DATABASES = {
         'DATABASE': 'postgres',
         'NAME': 'postgres',
         'USER': 'postgres.ogbikezbhsquqbmdamky',
-        'PASSWORD': 'qLKmatt07',
+        'PASSWORD': '***********',
         'HOST': 'aws-1-eu-west-1.pooler.supabase.com',
         'PORT': '6543'
     },
