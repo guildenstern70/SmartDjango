@@ -7,6 +7,10 @@
 ![Django](https://img.shields.io/badge/Django-6.0.6-green?logo=django&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=white)
 
+
+<img src="SmartDjango/static/SmartDjango/img/smartdjango.png" alt="SmartDjango screenshot" width="750" />
+
+
 ## Description
 
 SmartDjango is a modern Django 6 starter template featuring:
