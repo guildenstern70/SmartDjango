@@ -1,62 +1,102 @@
 {% extends "base-nav.html" %}
 {% load static %}
 
-{% block title %}
-    <title> SmartDjango | {{ title }} </title>
-{% endblock %}
-
-{% block pagecss %}
-    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/homepage.css" %}">
-{% endblock %}
+{% block title %}<title>SmartDjango | Profile</title>{% endblock %}
 
 {% block main %}
-<div class="container mt-3">
-    <h1 class="mt-2">Your Profile</h1>
-    <p class="text-muted">User details from the Django User model.</p>
+<div class="container" style="max-width:700px;">
 
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Username</div>
-                <div class="col-sm-9">{{ user_obj.username }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">First name</div>
-                <div class="col-sm-9">{{ user_obj.first_name|default:'-' }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Last name</div>
-                <div class="col-sm-9">{{ user_obj.last_name|default:'-' }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Email</div>
-                <div class="col-sm-9">{{ user_obj.email|default:'-' }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Date joined</div>
-                <div class="col-sm-9">{{ user_obj.date_joined }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Last login</div>
-                <div class="col-sm-9">{{ user_obj.last_login|default:'-' }}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Staff</div>
-                <div class="col-sm-9">{% if user_obj.is_staff %}Yes{% else %}No{% endif %}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Superuser</div>
-                <div class="col-sm-9">{% if user_obj.is_superuser %}Yes{% else %}No{% endif %}</div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-sm-3 fw-bold">Active</div>
-                <div class="col-sm-9">{% if user_obj.is_active %}Yes{% else %}No{% endif %}</div>
-            </div>
+    <!-- Page header -->
+    <div class="sd-page-header">
+        <div>
+            <h1 class="sd-page-title"><i class="bi bi-person-circle me-2 text-accent"></i>Profile</h1>
+            <p class="sd-page-subtitle">Your account details from the Django User model</p>
         </div>
     </div>
 
-    <div class="mt-3">
-        <a class="btn btn-secondary" href="/home">Back to Home</a>
+    <!-- Avatar + name -->
+    <div class="d-flex align-items-center gap-3 mb-4 fade-in">
+        <div class="profile-avatar">{{ user_obj.username|slice:":1"|upper }}</div>
+        <div>
+            <div style="font-size:1.2rem;font-weight:800;letter-spacing:-.02em;">
+                {{ user_obj.username|title }}
+            </div>
+            <div class="text-muted-sd" style="font-size:.85rem;">{{ user_obj.email|default:"No email" }}</div>
+            {% if user_obj.is_superuser %}
+                <span class="profile-badge yes mt-1"><i class="bi bi-shield-fill-check me-1"></i>Superuser</span>
+            {% elif user_obj.is_staff %}
+                <span class="profile-badge yes mt-1"><i class="bi bi-star-fill me-1"></i>Staff</span>
+            {% else %}
+                <span class="profile-badge no mt-1">Member</span>
+            {% endif %}
+        </div>
     </div>
+
+    <!-- Details card -->
+    <div class="sd-card px-4 py-2 fade-in">
+
+        <div class="profile-row">
+            <span class="profile-label">Username</span>
+            <span class="profile-value">{{ user_obj.username }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">First name</span>
+            <span class="profile-value">{{ user_obj.first_name|default:"—" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Last name</span>
+            <span class="profile-value">{{ user_obj.last_name|default:"—" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Email</span>
+            <span class="profile-value">{{ user_obj.email|default:"—" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Date joined</span>
+            <span class="profile-value text-muted-sd">{{ user_obj.date_joined }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Last login</span>
+            <span class="profile-value text-muted-sd">{{ user_obj.last_login|default:"—" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Staff</span>
+            <span class="profile-value">
+                {% if user_obj.is_staff %}
+                    <span class="profile-badge yes"><i class="bi bi-check-lg me-1"></i>Yes</span>
+                {% else %}
+                    <span class="profile-badge no">No</span>
+                {% endif %}
+            </span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Superuser</span>
+            <span class="profile-value">
+                {% if user_obj.is_superuser %}
+                    <span class="profile-badge yes"><i class="bi bi-check-lg me-1"></i>Yes</span>
+                {% else %}
+                    <span class="profile-badge no">No</span>
+                {% endif %}
+            </span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Active</span>
+            <span class="profile-value">
+                {% if user_obj.is_active %}
+                    <span class="profile-badge yes"><i class="bi bi-check-lg me-1"></i>Yes</span>
+                {% else %}
+                    <span class="profile-badge no">Inactive</span>
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-surface" href="/home/">
+            <i class="bi bi-arrow-left me-1"></i>Back to Home
+        </a>
+    </div>
+
 </div>
 {% endblock %}

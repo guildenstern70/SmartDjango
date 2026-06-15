@@ -1,46 +1,90 @@
 <header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md fixed-top sd-navbar">
         <div class="container-fluid">
-            <a class="navbar-brand text-success fw-bold ms-3" href="/home">SmartDjango
-            {% if header %} | {{ header }} {%  endif %}
+
+            <!-- Brand -->
+            <a class="navbar-brand sd-brand" href="/home/">
+                <span class="sd-brand-dot"></span>
+                SmartDjango
+                {% if header %}<span class="text-muted-sd fw-500 ms-1">/ {{ header }}</span>{% endif %}
             </a>
 
             {% if user.is_authenticated %}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+
+                <!-- Left nav links -->
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a id="homelink" class="nav-link active" href="/home">Home</a>
+                        <a id="homelink" class="nav-link" href="/home/">
+                            <i class="bi bi-house me-1"></i>Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a id="carslink" class="nav-link" href="/cars">Cars</a>
+                        <a id="carslink" class="nav-link" href="/cars/">
+                            <i class="bi bi-car-front me-1"></i>Cars
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a id="pageonelink" class="nav-link" href="/another?title=Page%20One">Page One</a>
+                        <a id="pageonelink" class="nav-link" href="/another/?title=Page%20One">
+                            <i class="bi bi-file-earmark me-1"></i>Page One
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a id="pagetwolink" class="nav-link" href="/another?title=Page%20Two">Page Two</a>
+                        <a id="pagetwolink" class="nav-link" href="/another/?title=Page%20Two">
+                            <i class="bi bi-file-earmark me-1"></i>Page Two
+                        </a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <ul class="navbar-nav me-4">
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle"
-                           href="#" id="dropdown01" data-bs-toggle="dropdown"
-                           aria-expanded="false">{{ username | title }}</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown01">
-                            <li><a class="dropdown-item" href="/profile">Details</a></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+
+                <!-- Right: theme toggle + user dropdown -->
+                <div class="d-flex align-items-center gap-2 me-2">
+
+                    <!-- Theme toggle -->
+                    <button id="theme-toggle-btn"
+                            class="sd-theme-toggle"
+                            onclick="toggleTheme()"
+                            title="Switch theme"
+                            aria-label="Toggle light/dark theme">
+                        <i id="theme-icon" class="bi bi-sun-fill"></i>
+                    </button>
+
+                    <!-- User dropdown -->
+                    <div class="dropdown">
+                        <div class="d-flex align-items-center gap-2 cursor-pointer"
+                             data-bs-toggle="dropdown" aria-expanded="false"
+                             style="cursor:pointer;">
+                            <div class="sd-avatar" title="{{ username }}">
+                                {{ username|slice:":1"|upper }}
+                            </div>
+                            <span class="sd-username-text d-none d-lg-inline">{{ username|title }}</span>
+                            <i class="bi bi-chevron-down text-muted-sd" style="font-size:.65rem;"></i>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end mt-2">
+                            <li>
+                                <a class="dropdown-item" href="/profile/">
+                                    <i class="bi bi-person"></i> Profile
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="/logout/">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </li>
                         </ul>
-                        </li>
-                    </ul>
+                    </div>
+
                 </div>
+
             </div>
             {% endif %}
+
         </div>
     </nav>
 </header>

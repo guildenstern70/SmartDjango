@@ -1,42 +1,66 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en" data-bs-theme="dark">
 <head>
 
     {% load static %}
 
-    <!-- Required meta tags -->
+    <!-- Anti-FOUC: apply saved theme before any CSS loads -->
+    <!-- NOT type=module or defer — must run synchronously -->
+    <script>
+    {
+      const t = localStorage.getItem('sd-theme') || 'dark';
+      document.documentElement.setAttribute('data-bs-theme', t);
+      document.querySelector('meta[name="color-scheme"]') &&
+        (document.querySelector('meta[name="color-scheme"]').content = t === 'dark' ? 'dark' : 'light');
+    }
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Supports both schemes; JS script above will narrow it to the saved choice -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
+    <meta name="description" content="SmartDjango – a modern Django 6 starter template">
 
-    <!-- Bootstrap & Bootstrap Icons CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+          crossorigin="anonymous">
 
-    <!-- Other CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/main.css" %}">
+    <!-- Bootstrap Icons 1.11.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'SmartDjango/css/main.css' %}">
 
     <!-- Favicon -->
-    <link rel="icon" href="{% static "SmartDjango/img/favicon-32x32.png" %}">
+    <link rel="icon" href="{% static 'SmartDjango/img/favicon-32x32.png' %}">
 
     {% block pagecss %}{% endblock %}
-    {% block title %}{% endblock %}
+    {% block title %}<title>SmartDjango</title>{% endblock %}
 
 </head>
-<body class="d-flex flex-column h-100">
+<body>
 
 {% block content %}
 {% endblock %}
 
-<!-- General purpose JavaScript -->
+<!-- Bootstrap JS bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+
+<!-- App JS -->
 <script src="{% static 'SmartDjango/js/main.js' %}"></script>
 
-<!-- Bootstrap JS bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-
-{% block extrajavascript %}
-{% endblock %}
+{% block extrajavascript %}{% endblock %}
 
 </body>
 </html>

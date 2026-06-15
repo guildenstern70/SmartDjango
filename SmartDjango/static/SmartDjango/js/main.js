@@ -59,3 +59,50 @@ function setActivePageLink(pageName) {
     }
 
 }
+
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+
+function _getCurrentTheme() {
+    return document.documentElement.getAttribute('data-bs-theme') || 'dark';
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    localStorage.setItem('sd-theme', theme);
+    // Update color-scheme meta so browser UI (scrollbars, inputs) follows
+    var meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) meta.content = theme;
+    _updateThemeIcon(theme);
+}
+
+function toggleTheme() {
+    setTheme(_getCurrentTheme() === 'dark' ? 'light' : 'dark');
+}
+
+function _updateThemeIcon(theme) {
+    var icon = document.getElementById('theme-icon');
+    var btn  = document.getElementById('theme-toggle-btn');
+    if (!icon) return;
+    if (theme === 'dark') {
+        icon.className     = 'bi bi-sun-fill';
+        if (btn) btn.title = 'Switch to light mode';
+    } else {
+        icon.className     = 'bi bi-moon-fill';
+        if (btn) btn.title = 'Switch to dark mode';
+    }
+}
+
+// Sync icon on every page load (theme already applied by inline <head> script)
+document.addEventListener('DOMContentLoaded', function () {
+    _updateThemeIcon(_getCurrentTheme());
+});
+
+// Keep icon accurate if OS theme changes while page is open
+// (only relevant when no user preference is saved)
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if (!localStorage.getItem('sd-theme')) {
+            _updateThemeIcon(_getCurrentTheme());
+        }
+    });
+}

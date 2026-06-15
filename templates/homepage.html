@@ -2,21 +2,54 @@
 {% load icon %}
 {% load static %}
 
-{% block title %}
-    <title> SmartDjango | {{ title }} </title>
-{% endblock %}
-
-{% block pagecss %}
-    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/homepage.css" %}">
-{% endblock %}
+{% block title %}<title>SmartDjango | Home</title>{% endblock %}
 
 {% block main %}
-    <div class="container">
-        <h1 class="mt-2">SmartDjango Template Home</h1>
-        <p class="lead">This is a Django starter template using embedded
-            <a href="https://www.sqlite.org/index.html" target="_blank">SQLite / PostgreSQL</a>,
-            <a href="https://getbootstrap.com/" target="_blank">Bootstrap 5</a>
-            - and cloud native.</p>
-        <p>Visit <a href="https://www.djangoproject.com/" target="_blank">the Diango official site</a> to discover more.</p>
+<div class="container">
+
+    <!-- Welcome banner -->
+    <div class="sd-welcome fade-in">
+        <h1>Welcome back, <span class="text-accent">{{ username|title }}</span> 👋</h1>
+        <p>Here's your SmartDjango dashboard — built with Django 6, Bootstrap 5.3, and SQLite / PostgreSQL.</p>
     </div>
+
+    <!-- Feature cards -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card fade-in" style="animation-delay:.05s">
+                <div class="feature-icon accent">
+                    <i class="bi bi-database-fill"></i>
+                </div>
+                <h5>Database</h5>
+                <p>Embedded SQLite for development and PostgreSQL via Supabase for production — switch with a single env var.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card fade-in" style="animation-delay:.12s">
+                <div class="feature-icon warning">
+                    <i class="bi bi-bootstrap-fill"></i>
+                </div>
+                <h5>Bootstrap 5.3</h5>
+                <p>Native dark-mode support, updated utilities, and a fully responsive layout out of the box.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card fade-in" style="animation-delay:.19s">
+                <div class="feature-icon success">
+                    <i class="bi bi-shield-check-fill"></i>
+                </div>
+                <h5>Django 6</h5>
+                <p>The latest Django release with built-in CSP support, background tasks, template partials and more.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick links -->
+    <div class="mt-4 d-flex gap-2 flex-wrap">
+        <a href="/cars/" class="btn btn-accent"><i class="bi bi-car-front me-1"></i>Manage Cars</a>
+        <a href="/another/?title=Page%20One" class="btn btn-surface">Page One</a>
+        <a href="/another/?title=Page%20Two" class="btn btn-surface">Page Two</a>
+    </div>
+
+</div>
 {% endblock %}

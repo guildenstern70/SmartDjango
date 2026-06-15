@@ -3,127 +3,197 @@
 ![SmartDjango CI](https://github.com/guildenstern70/SmartDjango/workflows/SmartDjango%20CI/badge.svg)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56d6e895837d4fcc93387e33eb774adc)](https://www.codacy.com/gh/guildenstern70/SmartDjango/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guildenstern70/SmartDjango&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6.0.6-green?logo=django&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap&logoColor=white)
 
 ## Description
-Template solution for Django Web App with:
 
-1. Django v.6.x
-2. Bootstrap v.5
-3. SQLite
+SmartDjango is a modern Django 6 starter template featuring:
+
+| | |
+|---|---|
+| **Backend** | Python 3.13 · Django 6.0.6 |
+| **Frontend** | Bootstrap 5.3.6 (dark mode) · Bootstrap Icons 1.11.3 · Inter font |
+| **Forms** | django-crispy-forms · crispy-bootstrap5 |
+| **Database** | SQLite (default) · PostgreSQL via Supabase |
+| **Server** | Gunicorn · WhiteNoise · Docker-ready |
+
+The UI uses a dark-mode-first design system with glassmorphism cards, an indigo accent palette, animated hero, and a single custom CSS file — no extra frameworks.
+
+---
 
 ## Setup
 
-To build the project locally, you need to have Python 3.10+ installed. You may use a virtual environment to manage dependencies.
+### Requirements
 
-### Virtual Environment
+- Python **3.12 or newer** (3.13 recommended — required by Django 6.0)
+- pip
 
-Create one with:
+### Virtual environment
 
-    python -m venv .venv
-
-Activate it with:
-
-    source ./.venv/bin/activate
-
-Then install the project dependencies:
-
-    pip install -r requirements.txt
-
-Deactivate it with:
-
-    deactivate
-
-## App Setup
-
-Before using the app, you need to set up the database. By default, it uses SQLite, but you can also configure it to 
-use PostgreSQL with Supabase.
-
-There are several commands which you will use to interact with migrations and 
-Django’s handling of database schema:
-
- - migrate, which is responsible for applying and unapplying migrations. 
- - makemigrations, which is responsible for creating new migrations based on the changes you have made to your models. 
- - sqlmigrate, which displays the SQL statements for a migration. 
- - showmigrations, which lists a project’s migrations and their status.
-
-Create Application database and data definitions:
-
-    python manage.py makemigrations [appname]  (Create new migrations based on the changes you have made to your models)
-    python manage.py migrate [appname] (Apply and unapply migrations)
-    python manage.py loaddata initial_data.yaml (Load initial data)
-
-if you want to use PostgreSQL you must use the database name 'supabase' adding:
-    
-    --database=supabase
-
-to the below commands. If you want to use SQLite, just run the above commands without the `--database` flag.
-
-    python manage.py makemigrations
-    python manage.py migrate
-    python manage.py loaddata initial_data.yaml
-
-
-## Local Run
-Run locally within virtual environment with:
-
-    ./run.sh
-
-## Local run with PostgreSQL
-
-1. Adjust settings.py to include the correct Supabase password.
-2. Create an administrator account with 'createsuperuser' command
-```
-   DJANGO_DATABASE='supabase' python manage.py createsuperuser
+```bash
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-3. Run the local development server with:
+---
 
+## Database setup
+
+By default the app uses SQLite. Run these commands once after cloning:
+
+```bash
+python manage.py makemigrations SmartDjango
+python manage.py migrate
+python manage.py loaddata SmartDjango/fixtures/initial_data.yaml
 ```
-   DJANGO_DATABASE='supabase' python manage.py runserver
+
+### PostgreSQL (Supabase)
+
+1. Set your Supabase credentials in `SmartDjango/settings.py` (the `supabase` database block).
+2. Prefix every manage command with `DJANGO_DATABASE='supabase'`:
+
+```bash
+DJANGO_DATABASE='supabase' python manage.py migrate
+DJANGO_DATABASE='supabase' python manage.py createsuperuser
+DJANGO_DATABASE='supabase' python manage.py runserver
 ```
 
-## Download required libraries
+---
 
-    pip install -r requirements.txt
+## Local run
+
+The quickest way to start everything (migrate, seed, collect static, launch Gunicorn):
+
+```bash
+./run.sh
+```
+
+For the Django development server only:
+
+```bash
+python manage.py runserver
+```
+
+The app will be available at **http://localhost:8000** (dev server) or **http://localhost:8080** (Gunicorn via `run.sh`).
+
+Default credentials: `admin / admin` or `guest / guest`.
+
+---
+
+## Admin
+
+Create a superuser manually if needed:
+
+```bash
+python manage.py createsuperuser
+```
+
+Then visit `/admin/`.
+
+---
+
+## Docker
+
+```bash
+docker build --platform linux/amd64 -t smart-django:latest .
+docker run -p 8080:8080 smart-django:latest
+```
+
+The Docker image is based on `python:3.13-slim-bookworm`.
+
+---
 
 ## Reset database
 
-To reset the database, run:
+```bash
+# SQLite
+python manage.py flush
 
-    python manage.py flush
+# PostgreSQL
+python manage.py flush --database=supabase
+```
 
-or for PostgreSQL:
+To drop all PostgreSQL tables and start fresh:
 
-    python manage.py flush --database=supabase
-    
-## Admin App
+```sql
+do $$ declare
+    r record;
+begin
+    for r in (select tablename from pg_tables where schemaname = 'public') loop
+        execute 'drop table if exists ' || quote_ident(r.tablename) || ' cascade';
+    end loop;
+end $$;
+```
 
-If not already done, create super-user with
+---
 
-    python manage.py createsuperuser
-    
-If unsure, try with "admin/admin"
+## Project structure
 
-## Run with Docker
+```
+SmartDjango/
+├── SmartDjango/          # Django project package
+│   ├── settings.py       # Config (pathlib BASE_DIR, DEFAULT_AUTO_FIELD, etc.)
+│   ├── urls.py           # URL routing
+│   ├── views.py          # Page & auth views
+│   ├── forms.py          # Crispy forms
+│   ├── models.py         # Brand, Car models
+│   ├── db_utils.py       # Seed helpers
+│   ├── static/
+│   │   └── SmartDjango/
+│   │       ├── css/main.css   # Full design system (single file)
+│   │       ├── js/            # main.js, cars.js
+│   │       └── img/           # Brand logos, favicons
+│   └── fixtures/
+│       └── initial_data.yaml
+├── templates/
+│   ├── skeleton.html     # Base HTML (Bootstrap 5.3, dark mode, Inter)
+│   ├── base-nav.html     # Layout with glass navbar + footer
+│   ├── header.html       # Glassmorphism navbar
+│   ├── footer.html       # Dark three-column footer
+│   ├── index.html        # Hero landing page
+│   ├── homepage.html     # Dashboard with feature cards
+│   ├── cars.html         # Car management table + modals
+│   ├── anotherpage.html  # Generic placeholder page
+│   └── account/
+│       ├── login.html
+│       ├── profile.html
+│       ├── registration.html
+│       └── registration_ok.html
+├── manage.py
+├── run.sh
+├── Dockerfile            # python:3.13-slim-bookworm
+└── requirements.txt
+```
 
-    docker build --platform linux/amd64 -t smart-django:x .
-    docker run -p 8080:8080 smart-django:1
+---
 
-### Crispy Forms
+## Dependencies
 
-This project uses Crispy Forms for Bootstrap:
+Key packages (see `requirements.txt` for pinned versions):
 
-    https://django-crispy-forms.readthedocs.io/en/latest/
+- [`Django`](https://www.djangoproject.com/) 6.0.6
+- [`django-crispy-forms`](https://django-crispy-forms.readthedocs.io/) + `crispy-bootstrap5` 2026.3
+- [`whitenoise`](https://whitenoise.readthedocs.io/) — static file serving
+- [`gunicorn`](https://gunicorn.org/) — production WSGI server
+- [`psycopg`](https://www.psycopg.org/) — PostgreSQL adapter
+- [`django-feather`](https://pypi.org/project/django-feather/) — Feather icon template tags
 
-### Drop all PostgreSQL tables
+---
 
-   do $$ declare
-       r record;
-   begin
-       for r in (select tablename from pg_tables where schemaname = 'public') loop
-           execute 'drop table if exists ' || quote_ident(r.tablename) || ' cascade';
-       end loop;
-   end $$;
+## Changelog
 
+### 2026-06
+- Upgraded Django 5.2.9 → **6.0.6**
+- Upgraded crispy-bootstrap5 2025.6 → **2026.3** (Django 6 support)
+- Docker base image updated `python:3.11-slim-buster` → **python:3.13-slim-bookworm**
+- `settings.py`: migrated `BASE_DIR` to `pathlib.Path`, removed `USE_L10N`, added `DEFAULT_AUTO_FIELD`
+- Full UI overhaul: dark-mode design system, glassmorphism navbar/cards, Bootstrap 5.3.6, Inter font, Bootstrap Icons 1.11.3, animated hero, feature-card dashboard, redesigned all 9 templates
 
-    
+---
+
+## License
+
+[MIT](LICENSE) © 2026 Alessio Saltarin

@@ -2,18 +2,39 @@
 {% load icon %}
 {% load static %}
 
-{% block title %}
-    <title> SmartDjango | {{ title }} </title>
-{% endblock %}
-
-{% block pagecss %}
-    <link rel="stylesheet" type="text/css" href="{% static "SmartDjango/css/homepage.css" %}">
-{% endblock %}
+{% block title %}<title>SmartDjango | {{ title }}</title>{% endblock %}
 
 {% block main %}
-    <div class="container">
-        <h1 class="mt-2">{{ title}}</h1>
-        <p class="lead">Displaying different content here.</p>
-        <p>Back to <a href="/home">the homepage</a></p>
+<div class="container">
+
+    <!-- Page header -->
+    <div class="sd-page-header">
+        <div>
+            <h1 class="sd-page-title"><i class="bi bi-file-earmark-text me-2 text-accent"></i>{{ title }}</h1>
+            <p class="sd-page-subtitle">
+                <a href="/home/" class="sd-breadcrumb">Home</a>
+                <span class="text-muted-sd mx-1">/</span>
+                <span class="text-accent">{{ title }}</span>
+            </p>
+        </div>
     </div>
+
+    <!-- Content card -->
+    <div class="sd-card p-4 fade-in">
+        <p class="text-muted-sd mb-3" style="font-size:.9rem;">
+            This is a placeholder page demonstrating how SmartDjango renders dynamic titles via URL parameters.
+        </p>
+        <p style="color:var(--text); font-size:.9rem; line-height:1.7;">
+            The <code style="color:var(--accent-hover);background:rgba(108,99,255,.12);padding:.1rem .4rem;border-radius:4px;">title</code>
+            parameter is passed from the URL query string through the view and rendered here.
+            You can use this pattern to build dynamic, parameterised pages.
+        </p>
+        <div class="mt-4">
+            <a href="/home/" class="btn btn-surface">
+                <i class="bi bi-arrow-left me-1"></i>Back to Home
+            </a>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

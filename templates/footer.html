@@ -1,10 +1,18 @@
-<footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
-    <span class="text-muted">
-        <b>SmartDjango</b> template |
-        &copy; 2026 Alessio Saltarin (alessiosaltarin@gmail.com) |
-        DB: {{ db_name }} |
-        MIT License
-    </span>
+<footer class="sd-footer">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div>
+                <span class="fw-700 text-accent" style="font-size:.85rem; font-weight:700;">SmartDjango</span>
+                <span class="ms-2">&copy; 2026 Alessio Saltarin</span>
+            </div>
+            <div>
+                <span class="sd-db-badge">
+                    <i class="bi bi-database"></i> {{ db_name }}
+                </span>
+            </div>
+            <div>
+                <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>
+            </div>
+        </div>
     </div>
 </footer>

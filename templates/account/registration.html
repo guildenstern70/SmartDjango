@@ -3,37 +3,42 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}
-    <title> SmartDjango | {{ title }} </title>
-{% endblock %}
+{% block title %}<title>SmartDjango | Register</title>{% endblock %}
 
 {% block main %}
+<div class="auth-wrapper">
+    <div class="auth-card glass-card">
 
-    <div class="row">
-            <div class="col-3">
-                &nbsp;
-            </div>
-            <div class="col-6">
-                {% if messages %}
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <strong>Registration failed</strong>
-                      <ul class="messages">
-                        {% for message in messages %}
+        <!-- Brand -->
+        <div class="auth-logo">
+            <span style="width:28px;height:28px;border-radius:8px;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;">S</span>
+            SmartDjango
+        </div>
+        <p class="text-muted-sd mb-0" style="font-size:.85rem;">Create a new account</p>
+        <div class="auth-divider"></div>
+
+        {% if messages %}
+        <div class="alert alert-warning d-flex align-items-start gap-2 mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
+            <div>
+                <strong>Registration failed</strong>
+                <ul class="mb-0 mt-1 ps-3">
+                    {% for message in messages %}
                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                      </ul>
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
-                <div class="jumbotron border mt-4">
-                    {% crispy form %}
-                </div>
+                    {% endfor %}
+                </ul>
             </div>
-            <div class="col-3">
-                &nbsp;
-            </div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        {% crispy form %}
+
+        <p class="text-center text-muted-sd mt-3 mb-0" style="font-size:.82rem;">
+            Already have an account?
+            <a href="/login/" style="color:var(--accent-hover);">Sign in</a>
+        </p>
+
     </div>
-
-
-
+</div>
 {% endblock %}
