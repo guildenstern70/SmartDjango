@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smartdjango
+  namespace: smartdjango
+  labels:
+    app: smartdjango
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smartdjango
+  template:
+    metadata:
+      labels:
+        app: smartdjango
+    spec:
+      # Wait for PostgreSQL to be healthy before the app pod starts
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z postgres-service 5432; do
+                echo "Waiting for PostgreSQL..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready."
+      containers:
+        - name: smartdjango
+          # Replace with your own image if you push to a registry.
+          # For minikube with a local build use:
+          #   eval $(minikube docker-env)
+          #   docker build -t smart-django:latest .
+          image: smart-django:latest
+          # Never pull from registry — use the local minikube image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: smartdjango-config
+          env:
+            # Superuser credentials
+            - name: DJANGO_SUPERUSER_USERNAME
+              value: "admin"
+            - name: DJANGO_SUPERUSER_PASSWORD
+              value: "admin"
+            - name: DJANGO_SUPERUSER_EMAIL
+              value: "admin@smartdjango.net"
+            # Database credentials — injected from the Secret
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-db
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smartdjango-service
+  namespace: smartdjango
+  labels:
+    app: smartdjango
+spec:
+  selector:
+    app: smartdjango
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
+  type: NodePort

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smartdjango-config
+  namespace: smartdjango
+data:
+  # Selects the "k8s" database block defined in settings.py
+  DJANGO_DATABASE: "k8s"
+  # Django host setting — accept all hosts inside the cluster
+  DJANGO_ALLOWED_HOSTS: "*"
+  # PostgreSQL host matches the postgres Service name
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"

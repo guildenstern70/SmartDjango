@@ -106,6 +106,102 @@ The Docker image is based on `python:3.13-slim-bookworm`.
 
 ---
 
+## Kubernetes (minikube)
+
+The `k8s/` directory contains all manifests to run SmartDjango on a local minikube cluster with **two pods**:
+
+| Pod | Image | Role |
+|---|---|---|
+| `postgres` | `postgres:16-alpine` | PostgreSQL database (ClusterIP service) |
+| `smartdjango` | `smart-django:latest` | Django + Gunicorn (NodePort 30080) |
+
+### Prerequisites
+
+- [minikube](https://minikube.sigs.k8s.io/docs/start/) installed and running
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) installed
+- Docker installed
+
+### Step-by-step
+
+#### 1. Start minikube
+
+```bash
+minikube start
+```
+
+#### 2. Point Docker to minikube's internal registry
+
+Build the image **inside** minikube so Kubernetes can find it without a remote registry:
+
+```bash
+eval $(minikube docker-env)
+```
+
+> **Note**: this command affects the current shell only. Run it again in every new terminal session before building.
+
+#### 3. Build the Docker image
+
+```bash
+docker build --platform linux/amd64 -t smart-django:latest .
+```
+
+#### 4. Deploy the full stack
+
+```bash
+kubectl apply -k k8s/
+```
+
+This creates (in order):
+1. `smartdjango` namespace
+2. PostgreSQL Secret, PVC, Deployment and ClusterIP Service
+3. Django ConfigMap, Deployment and NodePort Service
+
+#### 5. Watch pods come up
+
+```bash
+kubectl get pods -n smartdjango -w
+```
+
+Both pods should reach `Running` state. The `smartdjango` pod has an init-container that waits for PostgreSQL to accept connections before starting Django.
+
+#### 6. Open the app in your browser
+
+```bash
+minikube service smartdjango-service -n smartdjango
+```
+
+minikube will open the app automatically (or print the URL). Default credentials: `admin / admin` or `guest / guest`.
+
+#### 7. View logs
+
+```bash
+# Django app logs
+kubectl logs -n smartdjango deployment/smartdjango -f
+
+# PostgreSQL logs
+kubectl logs -n smartdjango deployment/postgres -f
+```
+
+#### 8. Run Django management commands inside the pod
+
+```bash
+kubectl exec -n smartdjango deployment/smartdjango -- python manage.py shell
+```
+
+### Tear down
+
+```bash
+kubectl delete -k k8s/
+```
+
+To also stop minikube:
+
+```bash
+minikube stop
+```
+
+---
+
 ## Reset database
 
 ```bash
@@ -165,7 +261,15 @@ SmartDjango/
 ├── manage.py
 ├── run.sh
 ├── Dockerfile            # python:3.13-slim-bookworm
-└── requirements.txt
+├── requirements.txt
+└── k8s/                  # Kubernetes manifests (minikube)
+    ├── namespace.yaml
+    ├── postgres-secret.yaml
+    ├── postgres-pvc.yaml
+    ├── postgres-deployment.yaml
+    ├── django-configmap.yaml
+    ├── django-deployment.yaml
+    └── kustomization.yaml
 ```
 
 ---

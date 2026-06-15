@@ -76,6 +76,16 @@ DATABASES = {
         'HOST': 'aws-1-eu-west-1.pooler.supabase.com',
         'PORT': '6543'
     },
+    # Kubernetes: values injected via ConfigMap (DB_HOST, DB_PORT)
+    # and Secret (DB_USER, DB_PASSWORD, DB_NAME).
+    'k8s': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'smartdjango_db'),
+        'USER': os.environ.get('DB_USER', 'smartdjango'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'postgres-service'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    },
 }
 
 default_database = os.environ.get('DJANGO_DATABASE', 'local')
